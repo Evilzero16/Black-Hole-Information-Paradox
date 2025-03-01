@@ -79,4 +79,4 @@ Black holes are believed to be fast quantum scramblers, mixing the information t
 Install the main dependencies with:
 
 ```bash
-pip install qiskit pennylane torch  # or tensorflow, depending on your choice
+pip install qiskit pennylane torch  
