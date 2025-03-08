@@ -1,12 +1,9 @@
-from fileinput import filename
-
 from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
 from qiskit.quantum_info import Operator
 from qiskit_aer import Aer
-from qiskit.visualization import plot_histogram, circuit_drawer, \
-    plot_bloch_vector
+from qiskit.visualization import plot_histogram, plot_bloch_vector
 import matplotlib.pyplot as plt
-from qiskit import transpile, assemble
+from qiskit import transpile
 from qiskit.quantum_info import Statevector
 import numpy as np
 
