@@ -29,14 +29,17 @@ def prepare_state(state, theta=None):
     circuit.measure(0, 0)
     return circuit
 
-selected_state = "+"
+selected_state = "ry"
 theta_val = np.pi / 3
 
 qc = prepare_state(selected_state, theta_val if selected_state == 'ry' else None)
 
 print(f"Quantum Circuit for State {selected_state}")
 print(qc)
-qc.draw(output='mpl', filename=f"circuit_{selected_state}")
+if selected_state != 'ry':
+   qc.draw(output='mpl', filename=f"|{selected_state}⟩/circuit.png")
+else:
+    qc.draw(output='mpl', filename=f"|ψ⟩/circuit.png")
 plt.show()
 
 simulator = Aer.get_backend("qasm_simulator")
@@ -50,7 +53,10 @@ print(f"Measurement Results {counts}")
 
 hist = plot_histogram(counts, title=f"Measurement Results for {selected_state}")
 plt.show()
-hist.savefig(f"histogram_{selected_state}.png", dpi=300)
+if selected_state != 'ry':
+   hist.savefig(f"|{selected_state}⟩/histogram.png", dpi=300)
+else:
+    hist.savefig(f"|ψ⟩/histogram.png", dpi=300)
 
 
 circuit_bloch = QuantumCircuit(1)  # Create a new circuit without measurement
@@ -73,5 +79,8 @@ bloch_vector = [np.real(state.expectation_value(Operator([[0, 1], [1, 0]]))),  #
 
 # Plot Bloch sphere representation
 bloch = plot_bloch_vector(bloch_vector, title=f"Bloch Sphere for |{selected_state}⟩")
-bloch.savefig(f'Bloch_spehere{selected_state}')
+if not selected_state == 'ry':
+   bloch.savefig(f'|{selected_state}⟩/Bloch_spehere')
+else:
+    bloch.savefig(f'|ψ⟩/Bloch_spehere')
 plt.show()
