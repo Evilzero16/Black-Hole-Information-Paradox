@@ -1,3 +1,5 @@
+import math
+
 from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
 from qiskit.quantum_info import Operator
 from qiskit_aer import Aer
@@ -27,8 +29,8 @@ def prepare_state(state, theta=None):
     return circuit
 
 selected_state = "ry"
-theta_val = np.pi / 3
-
+theta_val = (math.pi / 6)
+theta_deg = round(np.degrees(theta_val))
 qc = prepare_state(selected_state, theta_val if selected_state == 'ry' else None)
 
 print(f"Quantum Circuit for State {selected_state}")
@@ -36,7 +38,7 @@ print(qc)
 if selected_state != 'ry':
    qc.draw(output='mpl', filename=f"|{selected_state}⟩/circuit.png")
 else:
-    qc.draw(output='mpl', filename=f"|ψ⟩/circuit.png")
+    qc.draw(output='mpl', filename=f"|ψ⟩/|ψ⟩-{str(theta_deg)}/circuit_{theta_deg}.png")
 plt.show()
 
 simulator = Aer.get_backend("qasm_simulator")
@@ -53,7 +55,7 @@ plt.show()
 if selected_state != 'ry':
    hist.savefig(f"|{selected_state}⟩/histogram.png", dpi=300)
 else:
-    hist.savefig(f"|ψ⟩/histogram.png", dpi=300)
+    hist.savefig(f"|ψ⟩/|ψ⟩-{theta_deg}/histogram_{str(theta_deg)}.png", dpi=300)
 
 
 circuit_bloch = QuantumCircuit(1)  # Create a new circuit without measurement
@@ -79,5 +81,5 @@ bloch = plot_bloch_vector(bloch_vector, title=f"Bloch Sphere for |{selected_stat
 if not selected_state == 'ry':
    bloch.savefig(f'|{selected_state}⟩/Bloch_spehere')
 else:
-    bloch.savefig(f'|ψ⟩/Bloch_spehere')
+    bloch.savefig(f'|ψ⟩/|ψ⟩-{theta_deg}/Bloch_spehere_{theta_deg}')
 plt.show()
