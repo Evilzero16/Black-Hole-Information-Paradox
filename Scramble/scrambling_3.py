@@ -6,7 +6,13 @@ from fractions import Fraction
 import ast
 
 
-def prepare_state(state, theta):
+def prepare_entanglement(state, theta):
     circuit = QuantumCircuit(3, 3)
+    circuit.h(0)
+    circuit.cx(0, 1)
+    circuit.cx(1, 2)
+
+
 
     return circuit
+

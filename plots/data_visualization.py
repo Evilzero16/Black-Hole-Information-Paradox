@@ -1,5 +1,4 @@
 import math
-
 from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
 from qiskit.quantum_info import Operator
 from qiskit_aer import Aer
@@ -29,7 +28,7 @@ def prepare_state(state, theta=None):
     return circuit
 
 selected_state = "ry"
-theta_val = (math.pi / 6)
+theta_val = (math.pi / 4)
 theta_deg = round(np.degrees(theta_val))
 qc = prepare_state(selected_state, theta_val if selected_state == 'ry' else None)
 
