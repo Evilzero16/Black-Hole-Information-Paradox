@@ -100,3 +100,6 @@ python -m blackhole_paradox.run --message "hello" --mode hardware --shots 512
   [Quantum 2024](https://quantum-journal.org/papers/q-2024-08-08-1434/)
 - IBM Quantum plan details (runtime and access can change over time):
   [IBM Plans Overview](https://quantum.cloud.ibm.com/docs/guides/plans-overview)
+
+
+  
