@@ -1,2 +1,4 @@
 venv/
 qiskit-env/
+.idea/
+.pytest_cache/
