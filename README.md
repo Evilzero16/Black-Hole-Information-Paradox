@@ -1,82 +1,102 @@
-# Black Hole Information Scrambling & Retrieval via Quantum Teleportation
+# Black Hole Information Paradox (Interactive Toy Simulator)
 
-This repository contains code and simulations exploring the black hole information paradox using quantum information techniques. We simulate how quantum information that falls into a black hole is scrambled and later retrieved via quantum teleportation methods. The project also leverages hybrid quantum-classical optimization (Variational Quantum Machine Learning) to optimize the retrieval process.
+This repository provides an educational, interactive simulation of black-hole
+information scrambling and recovery using small quantum circuits.
 
----
+Users can input a classical message, observe each protocol stage, and compare
+decoder behavior under ideal and noisy conditions.
 
-## Overview
+## What This Project Simulates
 
-Black holes are believed to be fast quantum scramblers, mixing the information that falls into them in complex ways. This project is inspired by recent theoretical work—such as the Yoshida–Yao protocol—and aims to:
+The core flow is a toy Hayden-Preskill-style protocol:
 
-- **Simulate Quantum Scrambling:**  
-  Model how information entering a black hole is mixed (scrambled) using random unitary operations (gates like CNOT, Hadamard, and controlled-phase shifts).
+1. Encode user text into a small message register.
+2. Prepare an old black-hole resource entangled with a reference system.
+3. Scramble the combined black-hole and message subsystem.
+4. Partition part of that subsystem as "radiation".
+5. Attempt recovery with multiple decoder views.
+6. Compare recovery quality with fidelity-oriented metrics.
 
-- **Information Retrieval via Teleportation:**  
-  Implement quantum teleportation techniques to attempt retrieval of the scrambled quantum information, simulating how information might be recovered from a black hole.
+## Scientific Scope (Important)
 
-- **Hybrid Quantum-Classical Optimization:**  
-  Use variational quantum circuits (VQCs) with tools like PennyLane and Qiskit to optimize the retrieval process, enhancing fidelity between the original and reconstructed states.
+This is a quantum information toy model, not a literal astrophysical
+black-hole simulation.
 
-- **Scaling and Noise Studies:**  
-  Extend simulations from small (4–5 qubits) to larger systems (10+ qubits) and study the impact of realistic hardware noise with error mitigation techniques.
+- Small qubit counts are used intentionally for free-tier accessibility.
+- Decoder modes include pedagogical approximations:
+  - `toy_argmax`: most-likely basis readout after scrambling.
+  - `inverse_scrambler`: idealized baseline that assumes full unitary knowledge.
+- Results show trends in information flow and recovery behavior, not
+  experimental claims about real black holes.
 
----
+## Interactive Demo (Local Streamlit)
 
-## Project Structure
-
-1. **Core Concepts & Theory**  
-   Documentation on:
-   - Black hole information scrambling
-   - Quantum teleportation-based information retrieval
-   - Variational quantum machine learning for optimization
-
-2. **Quantum Scrambling Simulation**  
-   Code for setting up randomized quantum circuits:
-   - **Input Qubit:** Represents the information entering the black hole.
-   - **Scrambling Qubits:** A set of qubits that act as the black hole's internal state.
-   - **Random Unitary Gates:** Layers of gates (CNOT, Hadamard, controlled-phase) to simulate scrambling.
-
-3. **Information Retrieval via Teleportation**  
-   Implementation of the Yoshida–Yao protocol:
-   - Create entanglement between the information qubit and the scrambling system.
-   - Apply random scrambling (unitary transformations).
-   - Use teleportation circuits to attempt information recovery.
-   - Measure fidelity between the original and retrieved states.
-
-4. **Hybrid Optimization with VQML**  
-   Use PennyLane and classical optimizers (e.g., Adam, RMSprop) to:
-   - Define a variational quantum circuit (retrieval circuit) with trainable parameters.
-   - Optimize the circuit to maximize the fidelity of information retrieval.
-   - Benchmark the performance against fixed-circuit approaches.
-
-5. **Scaling and Noise Resistance**  
-   - Scale experiments from 4–5 qubits to 10+ qubits.
-   - Simulate realistic hardware noise using Qiskit Aer’s noise models.
-   - Explore error mitigation techniques (Qiskit Ignis, PennyLane error-mitigation).
-
-6. **Testing & Analysis**  
-   - Experiment with varying scrambling depths and noise levels.
-   - Analyze retrieval fidelity vs. scrambling depth.
-   - Compare fixed-circuit and hybrid-optimized retrieval methods.
-
-7. **Reporting Results**  
-   - Compile quantum circuits, Jupyter Notebooks, and analysis graphs.
-   - Discuss theoretical implications for black hole physics and quantum information.
-   - Outline future work (scaling up, improving noise resistance, exploring AdS/CFT models).
-
----
-
-## Requirements
-
-- **Python 3.8+**
-- **Qiskit:** For constructing and simulating quantum circuits  
-  [Qiskit Documentation](https://qiskit.org/documentation/)
-- **PennyLane:** For hybrid quantum-classical optimization  
-  [PennyLane Documentation](https://pennylane.ai/)
-- **PyTorch** or **TensorFlow:** For optimizing variational circuits
-- **Jupyter Notebook:** For interactive development and demonstration
-
-Install the main dependencies with:
+From repository root:
 
 ```bash
-pip install qiskit pennylane torch  
+pip install -r requirements.txt
+streamlit run app/streamlit_app.py
+```
+
+The app exposes:
+
+- user message input
+- qubit/depth controls
+- decoder comparison
+- stage-by-stage protocol trace
+- optional noisy simulator sweeps
+- optional IBM hardware checkpoint execution
+
+## Optional IBM Hardware Checkpoint
+
+Install dependencies and set your token:
+
+```bash
+pip install qiskit-ibm-runtime
+export IBM_QUANTUM_TOKEN="your_token_here"
+```
+
+Then enable the hardware checkpoint toggle inside the Streamlit app.
+
+Notes:
+
+- Keep runs small (few qubits, modest depth, limited shots) to stay within
+  free-tier runtime constraints.
+- Hardware mode is opt-in; simulator mode is default.
+
+## CLI Usage
+
+You can also run from CLI:
+
+```bash
+python -m blackhole_paradox.run --message "hello" --mode protocol
+```
+
+Noise sweep example:
+
+```bash
+python -m blackhole_paradox.run --message "hello" --mode noise --p2-values "0.0,0.01,0.02"
+```
+
+Hardware checkpoint example:
+
+```bash
+python -m blackhole_paradox.run --message "hello" --mode hardware --shots 512
+```
+
+## Repository Highlights
+
+- Core protocol: `src/blackhole_paradox/protocols/yoshida_yao.py`
+- Noise execution helpers: `src/blackhole_paradox/protocols/execution.py`
+- IBM checkpoint helper: `src/blackhole_paradox/hardware/ibm_runtime.py`
+- Streamlit app: `app/streamlit_app.py`
+- Tests: `tests/`
+
+## Research References Used for Design Direction
+
+- Yoshida and Kitaev, efficient decoding for Hayden-Preskill:
+  [arXiv:1710.03363](https://arxiv.org/abs/1710.03363)
+- Rampp and Claeys, Hayden-Preskill recovery in chaotic/integrable circuits:
+  [Quantum 2024](https://quantum-journal.org/papers/q-2024-08-08-1434/)
+- IBM Quantum plan details (runtime and access can change over time):
+  [IBM Plans Overview](https://quantum.cloud.ibm.com/docs/guides/plans-overview)

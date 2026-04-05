@@ -1,7 +1,9 @@
 qiskit>=1.4.1
+qiskit-ibm-runtime
 torch>=2.6.0
 numpy
 matplotlib
 jupyter
 pandas
 qiskit-aer
+streamlit
