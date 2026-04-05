@@ -1,4 +1,4 @@
-# Black Hole Information Paradox (Interactive Toy Simulator)
+# Black Hole Information Paradox (Interactive Simulator)
 
 This repository provides an educational, interactive simulation of black-hole
 information scrambling and recovery using small quantum circuits.
@@ -17,7 +17,7 @@ The core flow is a toy Hayden-Preskill-style protocol:
 5. Attempt recovery with multiple decoder views.
 6. Compare recovery quality with fidelity-oriented metrics.
 
-## Scientific Scope (Important)
+## Scientific Scope 
 
 This is a quantum information toy model, not a literal astrophysical
 black-hole simulation.
@@ -47,7 +47,7 @@ The app exposes:
 - optional noisy simulator sweeps
 - optional IBM hardware checkpoint execution
 
-## Optional IBM Hardware Checkpoint
+## IBM Hardware Checkpoint
 
 Install dependencies and set your token:
 
